@@ -12,6 +12,9 @@ interface InputFieldProps {
   children?: ReactNode
   options?: { value: string; label: string }[]
   register?: any
+  className?: string
+  errorMessage?: string
+  variant?: 'flat' | 'faded' | 'bordered' | 'underlined'
 }
 
 const InputField: FC<InputFieldProps> = ({
@@ -22,6 +25,9 @@ const InputField: FC<InputFieldProps> = ({
   children,
   options = [],
   register,
+  className,
+  errorMessage,
+  variant = 'flat',
   ...props
 }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -39,6 +45,9 @@ const InputField: FC<InputFieldProps> = ({
                 isRequired={isRequired}
                 type={isVisible ? 'text' : 'password'}
                 placeholder={placeholder}
+                variant={variant}
+                errorMessage={errorMessage}
+                className={className}
                 endContent={
                   <button
                     className='focus:outline-none'
@@ -59,14 +68,22 @@ const InputField: FC<InputFieldProps> = ({
             return (
               <Textarea
                 label={label}
+                rows={2}
                 isRequired={isRequired}
+                variant={variant}
                 placeholder={placeholder}
-                type={isVisible ? 'text' : 'password'}
+                errorMessage={errorMessage}
+                className={className}
+                {...register}
               />
             )
           case 'select':
             return (
-              <Select {...props}>
+              <Select
+                className={className}
+                errorMessage={errorMessage}
+                {...props}
+              >
                 {options.map((each, index) => (
                   <SelectItem key={each.value} value={each.value} {...register}>
                     {each.label}
@@ -80,7 +97,10 @@ const InputField: FC<InputFieldProps> = ({
                 type={type}
                 label={label}
                 isRequired={isRequired}
+                errorMessage={errorMessage}
                 placeholder={placeholder}
+                variant={variant}
+                className={className}
                 {...register}
                 {...props}
               />

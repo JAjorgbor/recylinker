@@ -36,7 +36,7 @@ export default Sidebar
 const SidebarContent = () => {
   const pathname = usePathname()
   return (
-    <Card className='flex flex-col gap-3 rounded-s-none h-full py-4 '>
+    <Card className='flex flex-col gap-3 rounded-s-none h-full py-4 z-50'>
       <div className='flex p-3 gap-2 font-bold items-center '>
         <Image
           src='/media/logo.png'
