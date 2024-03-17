@@ -43,16 +43,16 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
     <>
       <div className='mx-auto w-3/5 pb-[80px]' ref={textboxRef} />
       <form onSubmit={handleSubmit(submitData)} className='relative'>
-        <div className='fixed left-0 md:left-[250px] bottom-0 w-4/5 flex justify-center gap-4 items-center py-3 bg-background z-20'>
+        <div className='fixed left-0 md:left-[250px] bottom-0 w-full md:w-4/5 flex justify-center gap-4 items-center py-3 bg-background z-20'>
           <InputField
             type='text'
-            className='w-3/5 md:w-2/5 rounded-2xl'
+            className='w-4/5 md:w-2/5 rounded-2xl'
             variant='bordered'
             placeholder='Ask a question...'
             register={register('prompt', { required: 'Please enter a prompt' })}
             errorMessage={errors.prompts?.message as string}
           />
-          <Button
+          {/* <Button
             type='submit'
             endContent={<Send size={15} />}
             color='primary'
@@ -60,7 +60,7 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
             isLoading={isSubmitting}
           >
             Submit
-          </Button>
+          </Button> */}
         </div>
       </form>
     </>
