@@ -6,29 +6,39 @@ import { setOpenSidebar } from '@/features/sidebarSlice'
 import { useAppDispatch, useAppSelector } from '@/features/store'
 import { Card, Divider, Listbox, ListboxItem } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
+import useMediaQuery from '@/hooks/useMediaQuery'
 
 const Sidebar = ({}) => {
   const dispatch = useAppDispatch()
   const isOpen = useAppSelector((state) => state.sidebar.isOpen)
-
+  const isMobile = useMediaQuery(1024)
   return (
     <>
-      <div className='hidden lg:block sticky top-0 h-screen w-[250px]'>
-        <SidebarContent />
-      </div>
-      <Menu
-        pageWrapId={'page-wrap'}
-        outerContainerId={'outer-container'}
-        className='lg:hidden'
-        width={230}
-        isOpen={isOpen}
-        onOpen={() => dispatch(setOpenSidebar(true))}
-        onClose={() => dispatch(setOpenSidebar(false))}
-        customBurgerIcon={false}
-        customCrossIcon={false}
-      >
-        <SidebarContent />
-      </Menu>
+      {isMobile ? (
+        <div className='hidden lg:block sticky top-0 h-screen w-[250px]'>
+          <SidebarContent />
+        </div>
+      ) : (
+        (
+          <Menu
+            pageWrapId={'page-wrap'}
+            outerContainerId={'outer-container'}
+            className='lg:hidden'
+            width={230}
+            isOpen={isOpen}
+            onOpen={() => dispatch(setOpenSidebar(true))}
+            onClose={() => dispatch(setOpenSidebar(false))}
+            customBurgerIcon={false}
+            customCrossIcon={false}
+          >
+            <SidebarContent />
+          </Menu>
+        ) || (
+          <div className='hidden lg:block sticky top-0 h-screen w-[250px]'>
+            <SidebarContent />
+          </div>
+        )
+      )}
     </>
   )
 }
