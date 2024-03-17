@@ -14,7 +14,7 @@ const Sidebar = ({}) => {
   const isMobile = useMediaQuery(1024)
   return (
     <>
-      {isMobile ? (
+      {!isMobile ? (
         <div className='hidden lg:block sticky top-0 h-screen w-[250px]'>
           <SidebarContent />
         </div>
