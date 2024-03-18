@@ -13,6 +13,7 @@ interface InputFieldProps {
   options?: { value: string; label: string }[]
   register?: any
   className?: string
+  disabled: boolean
   errorMessage?: string
   variant?: 'flat' | 'faded' | 'bordered' | 'underlined'
 }
@@ -28,6 +29,7 @@ const InputField: FC<InputFieldProps> = ({
   className,
   errorMessage,
   variant = 'flat',
+  disabled = false,
   ...props
 }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -46,6 +48,7 @@ const InputField: FC<InputFieldProps> = ({
                 type={isVisible ? 'text' : 'password'}
                 placeholder={placeholder}
                 variant={variant}
+                disabled={disabled}
                 errorMessage={errorMessage}
                 className={className}
                 endContent={
@@ -71,6 +74,7 @@ const InputField: FC<InputFieldProps> = ({
                 rows={2}
                 isRequired={isRequired}
                 variant={variant}
+                disabled={disabled}
                 placeholder={placeholder}
                 errorMessage={errorMessage}
                 className={className}
@@ -82,6 +86,7 @@ const InputField: FC<InputFieldProps> = ({
               <Select
                 className={className}
                 errorMessage={errorMessage}
+                disabled={disabled}
                 {...props}
               >
                 {options.map((each, index) => (
@@ -98,6 +103,7 @@ const InputField: FC<InputFieldProps> = ({
                 label={label}
                 isRequired={isRequired}
                 errorMessage={errorMessage}
+                disabled={disabled}
                 placeholder={placeholder}
                 variant={variant}
                 className={className}
