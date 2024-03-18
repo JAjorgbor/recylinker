@@ -13,7 +13,7 @@ interface InputFieldProps {
   options?: { value: string; label: string }[]
   register?: any
   className?: string
-  disabled: boolean
+  disabled?: boolean
   errorMessage?: string
   variant?: 'flat' | 'faded' | 'bordered' | 'underlined'
 }
