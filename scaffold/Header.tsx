@@ -19,10 +19,12 @@ import { useAppDispatch, useAppSelector } from '@/features/store'
 import { setOpenSidebar } from '@/features/sidebarSlice'
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
-
   const dispatch = useAppDispatch()
+  const [theme, setTheme] = React.useState('light')
   const isSidebarOpen = useAppSelector((state) => state.sidebar.isOpen)
+  React.useEffect(() => {
+    setTheme(cookies.get('theme') || 'light')
+  }, [])
   return (
     <Navbar>
       <NavbarContent>
@@ -37,9 +39,7 @@ export default function Header() {
       <NavbarContent justify='end'>
         <NavbarItem>
           <Switch
-            defaultSelected={
-              cookies.get('theme') ? cookies.get('theme') === 'light' : true
-            }
+            isSelected={theme === 'light'}
             size='md'
             color='primary'
             thumbIcon={({ isSelected, className }) =>
@@ -50,6 +50,7 @@ export default function Header() {
               )
             }
             onValueChange={(val) => {
+              setTheme(val ? 'light' : 'dark')
               cookies.set('theme', val ? 'light' : 'dark')
               document.documentElement.className = val ? 'light' : 'dark'
             }}

@@ -7,38 +7,37 @@ import { useAppDispatch, useAppSelector } from '@/features/store'
 import { Card, Divider, Listbox, ListboxItem } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 import useMediaQuery from '@/hooks/useMediaQuery'
+import { useEffect } from 'react'
 
 const Sidebar = ({}) => {
   const dispatch = useAppDispatch()
+  const pathname = usePathname()
   const isOpen = useAppSelector((state) => state.sidebar.isOpen)
-  const isMobile = useMediaQuery(1024)
+  const { queryMatches } = useMediaQuery(1024)
+  useEffect(() => {
+    dispatch(setOpenSidebar(false))
+  }, [pathname])
   return (
     <>
-      {!isMobile ? (
-        <div className='hidden lg:block sticky top-0 h-screen w-[250px]'>
-          <SidebarContent />
-        </div>
-      ) : (
-        (
-          <Menu
-            pageWrapId={'page-wrap'}
-            outerContainerId={'outer-container'}
-            className='lg:hidden'
-            width={230}
-            isOpen={isOpen}
-            onOpen={() => dispatch(setOpenSidebar(true))}
-            onClose={() => dispatch(setOpenSidebar(false))}
-            customBurgerIcon={false}
-            customCrossIcon={false}
-          >
-            <SidebarContent />
-          </Menu>
-        ) || (
-          <div className='hidden lg:block sticky top-0 h-screen w-[250px]'>
-            <SidebarContent />
-          </div>
-        )
-      )}
+      {/* {queryMatches ? ( */}
+      <div className='hidden lg:block sticky top-0 h-screen w-[250px]'>
+        <SidebarContent />
+      </div>
+      {/* ) : ( */}
+      <Menu
+        pageWrapId={'page-wrap'}
+        outerContainerId={'outer-container'}
+        className='lg:hidden'
+        width={230}
+        isOpen={isOpen}
+        onOpen={() => dispatch(setOpenSidebar(true))}
+        onClose={() => dispatch(setOpenSidebar(false))}
+        customBurgerIcon={false}
+        customCrossIcon={false}
+      >
+        <SidebarContent />
+      </Menu>
+      {/* )} */}
     </>
   )
 }
@@ -46,7 +45,7 @@ export default Sidebar
 const SidebarContent = () => {
   const pathname = usePathname()
   return (
-    <Card className='flex flex-col gap-3 rounded-s-none h-full py-4 z-50'>
+    <Card className='flex flex-col gap-3 rounded-s-none h-full py-4'>
       <div className='flex p-3 gap-2 font-bold items-center '>
         <Image
           src='/media/logo.png'
