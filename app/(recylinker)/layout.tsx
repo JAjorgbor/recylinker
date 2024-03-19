@@ -10,7 +10,7 @@ interface layoutProps {
 const layout: FC<layoutProps> = ({ children }) => {
   return (
     <>
-      <div className='flex' id={'outer-container'}>
+      <div className='lg:flex' id={'outer-container'}>
         <div>
           <Sidebar />
         </div>
