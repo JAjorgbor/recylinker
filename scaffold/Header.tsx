@@ -51,7 +51,7 @@ export default function Header() {
             }
             onValueChange={(val) => {
               setTheme(val ? 'light' : 'dark')
-              cookies.set('theme', val ? 'light' : 'dark')
+              cookies.set('theme', val ? 'light' : 'dark', { expire: 30 })
               document.documentElement.className = val ? 'light' : 'dark'
             }}
           />
