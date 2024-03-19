@@ -89,7 +89,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({}) => {
         </Card>
         <Card className='col-span-3 order-3 md:order-4'>
           <CardHeader className='bg-default-100'>
-            <h3 className='uppercase'>Drop off Points History</h3>
+            <h3 className='uppercase'>Drop off History</h3>
           </CardHeader>
           <CardBody className='h-[250px]'>
             <div className='w-full'>

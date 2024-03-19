@@ -10,12 +10,16 @@ interface InputFieldProps {
   placeholder?: string
   isRequired?: boolean
   children?: ReactNode
+  endContent?: ReactNode
   options?: { value: string; label: string }[]
   register?: any
   className?: string
   disabled?: boolean
   errorMessage?: string
+  minRows?: number
+  maxRows?: number
   variant?: 'flat' | 'faded' | 'bordered' | 'underlined'
+  props?: any[]
 }
 
 const InputField: FC<InputFieldProps> = ({
@@ -24,12 +28,15 @@ const InputField: FC<InputFieldProps> = ({
   type = 'text',
   placeholder = '',
   children,
+  endContent,
   options = [],
   register,
   className,
   errorMessage,
   variant = 'flat',
   disabled = false,
+  maxRows,
+  minRows,
   ...props
 }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -71,14 +78,17 @@ const InputField: FC<InputFieldProps> = ({
             return (
               <Textarea
                 label={label}
-                rows={2}
+                minRows={minRows}
+                maxRows={maxRows}
                 isRequired={isRequired}
                 variant={variant}
                 disabled={disabled}
                 placeholder={placeholder}
                 errorMessage={errorMessage}
                 className={className}
+                endContent={endContent}
                 {...register}
+                {...props}
               />
             )
           case 'select':
