@@ -16,7 +16,7 @@ const layout: FC<layoutProps> = ({ children }) => {
         </div>
         <div id='page-wrap' className='flex-grow'>
           <Header />
-          <main className='min-h-screen w-full p-10 relative'>{children}</main>
+          <main className='min-h-screen w-full p-5 relative'>{children}</main>
         </div>
       </div>
     </>

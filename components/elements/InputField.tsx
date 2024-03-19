@@ -11,6 +11,7 @@ interface InputFieldProps {
   isRequired?: boolean
   children?: ReactNode
   endContent?: ReactNode
+  startContent?: ReactNode
   options?: { value: string; label: string }[]
   register?: any
   className?: string
@@ -29,6 +30,7 @@ const InputField: FC<InputFieldProps> = ({
   placeholder = '',
   children,
   endContent,
+  startContent,
   options = [],
   register,
   className,
@@ -58,6 +60,7 @@ const InputField: FC<InputFieldProps> = ({
                 disabled={disabled}
                 errorMessage={errorMessage}
                 className={className}
+                startContent={startContent}
                 endContent={
                   <button
                     className='focus:outline-none'
@@ -87,6 +90,7 @@ const InputField: FC<InputFieldProps> = ({
                 errorMessage={errorMessage}
                 className={className}
                 endContent={endContent}
+                startContent={startContent}
                 {...register}
                 {...props}
               />
@@ -100,7 +104,13 @@ const InputField: FC<InputFieldProps> = ({
                 {...props}
               >
                 {options.map((each, index) => (
-                  <SelectItem key={each.value} value={each.value} {...register}>
+                  <SelectItem
+                    key={each.value}
+                    value={each.value}
+                    endContent={endContent}
+                    startContent={startContent}
+                    {...register}
+                  >
                     {each.label}
                   </SelectItem>
                 ))}
@@ -117,6 +127,8 @@ const InputField: FC<InputFieldProps> = ({
                 placeholder={placeholder}
                 variant={variant}
                 className={className}
+                endContent={endContent}
+                startContent={startContent}
                 {...register}
                 {...props}
               />

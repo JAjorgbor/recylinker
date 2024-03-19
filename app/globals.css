@@ -26,6 +26,15 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.md-container ol {
+  list-style-type: numeric;
+  @apply pl-4;
+}
+.md-container ul {
+  list-style-type: disc;
+  @apply pl-4;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

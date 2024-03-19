@@ -150,7 +150,7 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
                       <Avatar size='sm' />
                     </p>
                     <Card className='border bg-background border-primary'>
-                      <CardBody>
+                      <CardBody className='md-container'>
                         <ReactMarkdown key={index}>
                           {/* {each?.parts?.[0]?.text?.match(userPromptRegex)?.[1]} */}
                           {each?.parts?.[0]?.text?.match(userPromptRegex)[1]}
@@ -173,7 +173,7 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
                       Recylinker Bot
                     </p>
                     <Card className=''>
-                      <CardBody>
+                      <CardBody className='md-container'>
                         {/* {each.parts.map((each: any, index: number) => ( */}
                         <ReactMarkdown>{each?.parts?.[0]?.text}</ReactMarkdown>
                         {/* <ReactMarkdown key={index}>{each.text}</ReactMarkdown> */}
