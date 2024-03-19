@@ -108,8 +108,7 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
         imageParts = await Promise.all(
           [...imagePrompt].map(fileToGenerativePart)
         )
-        // result = await model.generateContent([promptConfig, ...imageParts])
-        result = await model.generateContent([data.prompt, ...imageParts])
+        result = await model.generateContent([promptConfig, ...imageParts])
       }
 
       //   const result = await chat.sendMessage(promptConfig)
