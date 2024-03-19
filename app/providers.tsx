@@ -11,7 +11,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Toaster />
+      <Toaster richColors />
       <Provider store={store}>
         <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
       </Provider>

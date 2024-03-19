@@ -1,5 +1,6 @@
 'use client'
 import type { FC, ReactNode } from 'react'
+import { toast } from 'sonner'
 import { useRef, useState } from 'react'
 import InputField from '@/components/elements/InputField'
 import Image from 'next/image'
@@ -42,9 +43,9 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
   ) => {
     const file = event.target.files?.[0]
     if (file) {
-      if (file.size > 2000000) {
+      if (file.size > 5000000) {
         setSelectedImage(null)
-        // toast.warning('Product image size can not exceed 1mb')
+        toast.warning('Product image size can not exceed 1mb')
         console.log('Product image size can not exceed 1mb')
       } else {
         const imageUrl = URL.createObjectURL(file)
