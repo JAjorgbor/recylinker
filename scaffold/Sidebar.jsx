@@ -58,63 +58,53 @@ const SidebarContent = () => {
         <p>Recylinker</p>
       </div>
       <Divider />
-      <Listbox selectionMode='single'>
-        <ListboxItem
-          startContent={<Monitor size={15} className='text-primary' />}
-          className={`p-3 ${
+      <div className='flex flex-col px-1 gap-1'>
+        <Link
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
             pathname == '/dashboard' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/dashboard'
-          key={'dashboard'}
-          as={Link}
         >
+          <Monitor size={15} className='text-primary' />
           Dashboard
-        </ListboxItem>
-        <ListboxItem
-          startContent={<Map size={15} className='text-primary' />}
-          className={`p-3 ${
+        </Link>
+        <Link
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
             pathname == '/drop-points' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/drop-points'
-          key={'drop-points'}
-          as={Link}
         >
+          <Map size={15} className='text-primary' />
           Drop Points
-        </ListboxItem>
-        <ListboxItem
-          startContent={<Truck size={15} className='text-primary' />}
-          className={`p-3 ${
+        </Link>
+        <Link
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
             pathname == '/Pickups' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/Pickups'
-          key={'Pickups'}
-          as={Link}
         >
+          <Truck size={15} className='text-primary' />
           Pickups
-        </ListboxItem>
-        <ListboxItem
-          startContent={<Award size={15} className='text-primary' />}
-          className={`p-3 ${
+        </Link>
+        <Link
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
             pathname == '/claim-rewards' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/claim-rewards'
-          key={'claim-rewards'}
-          as={Link}
         >
+          <Award size={15} className='text-primary' />
           Claim Rewards
-        </ListboxItem>
-        <ListboxItem
-          startContent={<Home size={15} className='text-primary' />}
-          className={`p-3 ${
+        </Link>
+        <Link
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
             pathname == '/home-recycle' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/home-recycle'
-          key={'home-recycle'}
-          as={Link}
         >
+          <Home size={15} className='text-primary' />
           Home Recycle
-        </ListboxItem>
-      </Listbox>
+        </Link>
+      </div>
     </Card>
   )
 }
