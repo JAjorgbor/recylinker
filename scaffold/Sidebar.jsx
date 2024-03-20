@@ -65,6 +65,7 @@ const SidebarContent = () => {
             pathname == '/dashboard' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/dashboard'
+          key={'dashboard'}
           as={Link}
         >
           Dashboard
@@ -75,6 +76,7 @@ const SidebarContent = () => {
             pathname == '/drop-points' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/drop-points'
+          key={'drop-points'}
           as={Link}
         >
           Drop Points
@@ -85,6 +87,7 @@ const SidebarContent = () => {
             pathname == '/Pickups' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/Pickups'
+          key={'Pickups'}
           as={Link}
         >
           Pickups
@@ -95,6 +98,7 @@ const SidebarContent = () => {
             pathname == '/claim-rewards' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/claim-rewards'
+          key={'claim-rewards'}
           as={Link}
         >
           Claim Rewards
@@ -105,6 +109,7 @@ const SidebarContent = () => {
             pathname == '/home-recycle' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/home-recycle'
+          key={'home-recycle'}
           as={Link}
         >
           Home Recycle
