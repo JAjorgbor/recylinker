@@ -1,5 +1,6 @@
 'use client'
 import { push as Menu } from 'next-burger-menu'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Truck, Award, BarChart2, Home, Map, Monitor } from 'react-feather'
 import { setOpenSidebar } from '@/features/sidebarSlice'
@@ -64,6 +65,7 @@ const SidebarContent = () => {
             pathname == '/dashboard' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/dashboard'
+          as={Link}
         >
           Dashboard
         </ListboxItem>
@@ -73,6 +75,7 @@ const SidebarContent = () => {
             pathname == '/drop-points' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/drop-points'
+          as={Link}
         >
           Drop Points
         </ListboxItem>
@@ -82,6 +85,7 @@ const SidebarContent = () => {
             pathname == '/Pickups' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/Pickups'
+          as={Link}
         >
           Pickups
         </ListboxItem>
@@ -91,6 +95,7 @@ const SidebarContent = () => {
             pathname == '/claim-rewards' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/claim-rewards'
+          as={Link}
         >
           Claim Rewards
         </ListboxItem>
@@ -100,6 +105,7 @@ const SidebarContent = () => {
             pathname == '/home-recycle' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/home-recycle'
+          as={Link}
         >
           Home Recycle
         </ListboxItem>
