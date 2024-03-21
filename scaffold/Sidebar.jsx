@@ -60,7 +60,7 @@ const SidebarContent = () => {
       <Divider />
       <div className='flex flex-col px-1 gap-1'>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
             pathname == '/dashboard' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/dashboard'
@@ -69,7 +69,7 @@ const SidebarContent = () => {
           Dashboard
         </Link>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
             pathname == '/drop-points' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/drop-points'
@@ -78,7 +78,7 @@ const SidebarContent = () => {
           Drop Points
         </Link>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
             pathname == '/Pickups' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/Pickups'
@@ -87,7 +87,7 @@ const SidebarContent = () => {
           Pickups
         </Link>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
             pathname == '/claim-rewards' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/claim-rewards'
@@ -96,7 +96,7 @@ const SidebarContent = () => {
           Claim Rewards
         </Link>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm hover:bg-default-50 ${
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
             pathname == '/home-recycle' ? 'bg-default-100 text-primary' : ''
           }`}
           href='/home-recycle'
