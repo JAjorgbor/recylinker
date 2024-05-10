@@ -7,11 +7,14 @@ import { Eye, EyeOff } from 'react-feather'
 interface InputFieldProps {
   label?: string
   type?: string
+  value?: string
   placeholder?: string
   isRequired?: boolean
+  isInvalid?: boolean
   children?: ReactNode
   endContent?: ReactNode
   startContent?: ReactNode
+  onValueChange?: any
   options?: { value: string; label: string }[]
   register?: any
   className?: string
@@ -26,6 +29,8 @@ interface InputFieldProps {
 const InputField: FC<InputFieldProps> = ({
   label,
   isRequired,
+  isInvalid,
+  onValueChange,
   type = 'text',
   placeholder = '',
   children,
@@ -34,6 +39,7 @@ const InputField: FC<InputFieldProps> = ({
   options = [],
   register,
   className,
+  value,
   errorMessage,
   variant = 'flat',
   disabled = false,
@@ -61,6 +67,11 @@ const InputField: FC<InputFieldProps> = ({
                 errorMessage={errorMessage}
                 className={className}
                 startContent={startContent}
+                isInvalid={isInvalid}
+                value={value ?? register?.value}
+                {...register}
+                onValueChange={onValueChange}
+                {...props}
                 endContent={
                   <button
                     className='focus:outline-none'
@@ -74,7 +85,6 @@ const InputField: FC<InputFieldProps> = ({
                     )}
                   </button>
                 }
-                {...props}
               />
             )
           case 'textarea':
@@ -91,6 +101,9 @@ const InputField: FC<InputFieldProps> = ({
                 className={className}
                 endContent={endContent}
                 startContent={startContent}
+                isInvalid={isInvalid}
+                value={value ?? register?.value}
+                onValueChange={onValueChange}
                 {...register}
                 {...props}
               />
@@ -101,6 +114,8 @@ const InputField: FC<InputFieldProps> = ({
                 className={className}
                 errorMessage={errorMessage}
                 disabled={disabled}
+                isInvalid={isInvalid}
+                value={value ?? register?.value}
                 {...props}
               >
                 {options.map((each, index) => (
@@ -129,6 +144,9 @@ const InputField: FC<InputFieldProps> = ({
                 className={className}
                 endContent={endContent}
                 startContent={startContent}
+                isInvalid={isInvalid}
+                value={value ?? register?.value}
+                onValueChange={onValueChange}
                 {...register}
                 {...props}
               />

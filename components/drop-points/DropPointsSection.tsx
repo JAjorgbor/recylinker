@@ -2,7 +2,8 @@ import { Button, Card, CardBody, CardHeader } from '@nextui-org/react'
 import type { FC } from 'react'
 import Image from 'next/image'
 import { CornerUpRight, Search } from 'react-feather'
-import InputField from '../elements/InputField'
+import InputField from '@/components/elements/InputField'
+import MapView from '@/components/elements/MapView'
 
 interface DropPointsSectionProps {}
 
@@ -11,7 +12,7 @@ const DropPointsSection: FC<DropPointsSectionProps> = ({}) => {
     <>
       <Card>
         <CardBody className='flex-row md:h-[500px] gap-4'>
-          <div className='flex flex-col md:flex-row gap-6'>
+          <div className='flex flex-col md:grid grid-cols-4 gap-6'>
             <div className='flex flex-col gap-3'>
               <CardHeader className='text-xl font-bold text-foreground-600'>
                 Drop Points
@@ -74,14 +75,15 @@ const DropPointsSection: FC<DropPointsSectionProps> = ({}) => {
                 </Card>
               </div>
             </div>
-            <div className='md:w-4/5 h-[800px] md:h-full relative rounded-lg'>
-              <Image
+            <div className='md:col-span-3 h-[800px] md:h-full relative rounded-lg'>
+              {/* <Image
                 src='https://dummyimage.com/800x500/'
                 alt='map placeholder'
                 width={500}
                 className='h-full w-full'
                 height={500}
-              />
+              /> */}
+              <MapView />
             </div>
           </div>
         </CardBody>

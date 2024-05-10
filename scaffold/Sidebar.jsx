@@ -60,46 +60,54 @@ const SidebarContent = () => {
       <Divider />
       <div className='flex flex-col px-1 gap-1'>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
-            pathname == '/dashboard' ? 'bg-default-100 text-primary' : ''
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
+            pathname == '/resident/dashboard'
+              ? 'bg-default-100 text-primary'
+              : ''
           }`}
-          href='/dashboard'
+          href='/resident/dashboard'
         >
           <Monitor size={15} className='text-primary' />
           Dashboard
         </Link>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
-            pathname == '/drop-points' ? 'bg-default-100 text-primary' : ''
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
+            pathname == '/resident/drop-points'
+              ? 'bg-default-200 text-primary'
+              : ''
           }`}
-          href='/drop-points'
+          href='/resident/drop-points'
         >
           <Map size={15} className='text-primary' />
           Drop Points
         </Link>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
-            pathname == '/Pickups' ? 'bg-default-100 text-primary' : ''
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
+            pathname == '/resident/Pickups' ? 'bg-default-100 t2xt-primary' : ''
           }`}
-          href='/Pickups'
+          href='/resident/Pickups'
         >
           <Truck size={15} className='text-primary' />
           Pickups
         </Link>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
-            pathname == '/claim-rewards' ? 'bg-default-100 text-primary' : ''
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
+            pathname == '/resident/claim-rewards'
+              ? 'bg-default-200 text-primary'
+              : ''
           }`}
-          href='/claim-rewards'
+          href='/resident/claim-rewards'
         >
           <Award size={15} className='text-primary' />
           Claim Rewards
         </Link>
         <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 ${
-            pathname == '/home-recycle' ? 'bg-default-100 text-primary' : ''
+          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
+            pathname == '/resident/home-recycle'
+              ? 'bg-default-200 text-primary'
+              : ''
           }`}
-          href='/home-recycle'
+          href='/resident/home-recycle'
         >
           <Home size={15} className='text-primary' />
           Home Recycle
