@@ -1,22 +1,31 @@
 'use client'
-import { Sun, Menu as MenuBurger, Moon } from 'react-feather'
-import cookies from 'js-cookie'
-import React from 'react'
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from '@nextui-org/react'
+
+import { setOpenSidebar } from '@/features/sidebarSlice'
+import { useAppDispatch, useAppSelector } from '@/features/store'
 import {
   Avatar,
   Navbar,
-  NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
-  Link,
-  Button,
   Switch,
 } from '@nextui-org/react'
-import { useAppDispatch, useAppSelector } from '@/features/store'
-import { setOpenSidebar } from '@/features/sidebarSlice'
+import cookies from 'js-cookie'
+import React from 'react'
+import {
+  LogOut,
+  Menu as MenuBurger,
+  Moon,
+  Plus,
+  Settings,
+  Sun,
+} from 'react-feather'
 
 export default function Header() {
   const dispatch = useAppDispatch()
@@ -57,7 +66,28 @@ export default function Header() {
           />
         </NavbarItem>
         <NavbarItem>
-          <Avatar />
+          <Dropdown>
+            <DropdownTrigger>
+              <Avatar className='cursor-pointer' />
+            </DropdownTrigger>
+            <DropdownMenu>
+              <DropdownItem key='1' startContent={<Settings size={15} />}>
+                Settings
+              </DropdownItem>
+              <DropdownItem key='2' startContent={<Plus size={15} />}>
+                New Pickup Order
+              </DropdownItem>
+              <DropdownItem
+                key='3'
+                color='danger'
+                variant='solid'
+                className='text-danger transition-colors'
+                startContent={<LogOut size={15} />}
+              >
+                Log Out
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </NavbarItem>
       </NavbarContent>
     </Navbar>

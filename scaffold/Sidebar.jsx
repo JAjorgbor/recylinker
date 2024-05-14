@@ -83,23 +83,12 @@ const SidebarContent = () => {
         </Link>
         <Link
           className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
-            pathname == '/resident/Pickups' ? 'bg-default-100 t2xt-primary' : ''
+            pathname == '/resident/pickups' ? 'bg-default-100 t2xt-primary' : ''
           }`}
-          href='/resident/Pickups'
+          href='/resident/pickups'
         >
           <Truck size={15} className='text-primary' />
           Pickups
-        </Link>
-        <Link
-          className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
-            pathname == '/resident/claim-rewards'
-              ? 'bg-default-200 text-primary'
-              : ''
-          }`}
-          href='/resident/claim-rewards'
-        >
-          <Award size={15} className='text-primary' />
-          Claim Rewards
         </Link>
         <Link
           className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${

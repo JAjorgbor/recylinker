@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import ChatSection from '@/components/home-recycle/ChatSection'
+import ChatSection from '@/components/resident/home-recycle/ChatSection'
 
 interface pageProps {}
 

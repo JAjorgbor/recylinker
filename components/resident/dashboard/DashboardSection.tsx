@@ -1,95 +1,38 @@
 'use client'
-import {
-  Divider,
-  Card,
-  CardBody,
-  Button,
-  CardHeader,
-  Progress,
-} from '@nextui-org/react'
-import { CornerUpRight, ArrowRight } from 'react-feather'
+import { Button, Card, CardBody, CardHeader, Progress } from '@nextui-org/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { FC } from 'react'
+import { ArrowRight, CornerUpRight } from 'react-feather'
+import PickupsTable from './pickups/PickupsTable'
 
 interface DashboardSectionProps {}
 
 const DashboardSection: FC<DashboardSectionProps> = ({}) => {
   return (
     <>
-      <div className='flex flex-col md:grid md:grid-cols-5 gap-6 w-full'>
-        <Card className='col-span-3 min-h-[250px]'>
-          <CardBody className='flex flex-col sm:flex-row gap-3 items-center'>
-            <div className='flex flex-col text-center gap-3 flex-1'>
-              <p className='text-[2rem] font-bold'>100</p>
-              <p className='text-sm'>Total Times Recycled</p>
-              <p className='text-xs'>January 1, 2024 - Present</p>
-            </div>
-            <Divider orientation='vertical' />
-            <div className='flex flex-col gap-3 text-center flex-1'>
-              <p className='text-[2rem] font-bold'>
-                <span className='inline-block p-4 py-5 border-orange-500 border-5 rounded-full'>
-                  100
-                </span>
-              </p>
-              <p className='text-sm text-orange-500'>Current Streak</p>
-              <p className='text-xs'>March 16</p>
-            </div>
-            <Divider orientation='vertical' />
-            <div className='flex flex-col text-center gap-3 flex-1'>
-              <p className='text-[2rem] font-bold'>40</p>
-              <p className='text-sm'>Longest Streak</p>
-              <p className='text-xs'>January 10, 2024 - Febuary 20, 2024</p>
-            </div>
-          </CardBody>
-        </Card>
-        <Card className='col-span-2 '>
-          <CardBody className='gap-3 p-3 justify-center'>
-            <Image
+      <div className='grid md:grid-cols-5 gap-6 w-full'>
+        <Card className='md:col-span-2 bg-[url("/media/welcome-back.png")] bg-contain bg-no-repeat bg-right min-h-[250px]'>
+          <CardBody className='gap-3 p-3 justify-between py-8 md:py-12 h-full'>
+            {/* <Image
               src='https://dummyimage.com/100x80'
               alt='chat bot logo'
               width={100}
               height={80}
-            />
-            <p className='text-sm'>
-              Learn how to recycle effectively with our interactive chatbot! Get
-              personalized advice on reducing waste and recycling smartly.
-            </p>
-            <Button
-              color='primary'
-              endContent={<ArrowRight size={20} />}
-              className='md:w-1/2'
-            >
-              Start Recycling Chat
+            /> */}
+            {/* <div className='space-y-5'> */}
+            <h3 className='text-2xl sm:text-3xl font-bold'>
+              Welcome back Joshua
+            </h3>
+            <Button variant='solid' color='primary' className='font-bold'>
+              Order Trash Pickup
             </Button>
+            {/* </div> */}
           </CardBody>
         </Card>
-        <Card className='col-span-2 order-4 md:order-3'>
-          <CardBody className='gap-3 p-3 justify-center'>
-            <Image
-              src='https://dummyimage.com/100x80'
-              alt='chat bot logo'
-              width={100}
-              height={80}
-            />
-            <div className='space-y'>
-              <h3 className=''>Current Balance</h3>
-              <p className='font-bold text-xl'>5 </p>
-              <p className='text-sm'>
-                Collect up to 1000 points to claim rewards.
-              </p>
-            </div>
-
-            <Progress
-              label={<span className='text-2xl'>🪙</span>}
-              //   formatOptions={{ style: 'unit', unit: 'kg' }}
-              aria-label='Loading...'
-              value={60}
-            />
-          </CardBody>
-        </Card>
-        <Card className='col-span-3 order-3 md:order-4'>
+        <Card className='md:col-span-3'>
           <CardHeader className='bg-default-100'>
-            <h3 className='uppercase'>Drop off History</h3>
+            <h3 className='uppercase'>Recent Dropoffs</h3>
           </CardHeader>
           <CardBody className='h-[250px]'>
             <div className='w-full'>
@@ -195,6 +138,33 @@ const DashboardSection: FC<DashboardSectionProps> = ({}) => {
               </table>
             </div>
           </CardBody>
+        </Card>
+        <Card className='md:col-span-3 order-4 md:order-3 '>
+          <CardHeader className='bg-default-100'>
+            <h3 className='uppercase'>Recent Trash Pickups</h3>
+          </CardHeader>
+          <CardBody className='h-[250px] p-0'>
+            <PickupsTable className='w-full' />
+          </CardBody>
+        </Card>
+        <Card className='md:col-span-2 bg-[url("/media/chat-bot.jpg")] bg-cover bg-center bg-no-repeat text-white min-h-[250px] order-3 md:order-4 relative'>
+          <div className='absoulte w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.3)]'>
+            <CardBody className='gap-3 p-3 justify-end h-full'>
+              <p className='font-bold'>
+                Learn how to recycle effectively with our interactive chatbot!
+                Get personalized advice on reducing waste and recycling smartly.
+              </p>
+              <Button
+                color='primary'
+                endContent={<ArrowRight size={20} />}
+                className='md:w-1/2'
+                href='/home-recycle'
+                as={Link}
+              >
+                Start Recycling Chat
+              </Button>
+            </CardBody>
+          </div>
         </Card>
       </div>
     </>

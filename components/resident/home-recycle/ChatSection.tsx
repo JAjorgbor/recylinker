@@ -1,23 +1,16 @@
 'use client'
-import type { FC, ReactNode } from 'react'
-import { toast } from 'sonner'
-import { useRef, useState } from 'react'
-import InputField from '@/components/elements/InputField'
+import { getYoutubeResults } from '@/api/portal-user/requests/chat'
+import InputField from '@/components/resident/elements/InputField'
+import { GoogleGenerativeAI } from '@google/generative-ai'
+import { Avatar, Card, CardBody, Skeleton } from '@nextui-org/react'
 import Image from 'next/image'
-import {
-  Skeleton,
-  Button,
-  CardHeader,
-  Avatar,
-  Card,
-  CardBody,
-  Textarea,
-  Divider,
-} from '@nextui-org/react'
-import { Send, Image as ImageIcon, Camera, X } from 'react-feather'
+import type { FC } from 'react'
+import { useRef, useState } from 'react'
+import { Camera, Image as ImageIcon, Send, X } from 'react-feather'
 import { useForm } from 'react-hook-form'
 import ReactMarkdown from 'react-markdown'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import YouTube from 'react-youtube'
+import { toast } from 'sonner'
 
 interface ChatSectionProps {}
 
@@ -76,7 +69,7 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
     reset({ prompt: '' })
     let history = [...chatHistory]
     // console.log(data)
-    const promptConfig = `You are an assistive ai that specializes in giving detailed advice and instructions on how to recycle products at home creatively, the feedback you give is highly detailed and focuses on creative ideas on how to recycle items that can be readily recycled, you are to give at least 3 options of ways of recycling the given material in question with comprehensive feedback included. Any prompt provided below that does not fall in line with the directive of recycling should be replied with an appropriate response indicating that you are not designed to handle those kind of questions, if the recycling prompt that would be given below is not something that could be recycled at home then respond with a suggestion to the user to take the item or items to a drop off location or suggest that they could place a pickup order for the item for proper waste disposal and recycling with the appropriate authority needed to recycle the item in question, the prompt in question is this (ignore the ** **): **${data.prompt}**`
+    const promptConfig = `You are an assistive ai that specializes in giving detailed advice and instructions on how to recycle products at home creatively, the feedback you give is highly detailed and focuses on creative ideas on how to recycle items that can be readily recycled, you are to give at least 3 options of ways of recycling the given material in question with very very detailed steps included, at the end you are to give specific search phrases that can be used to find tutorials for the options you gave via youtube surround each search phrase with [(>" as the begining and "<)] at the end, Please it is very important that you surround these search phrases with the brackets specified earlier as it would be used for a very important purpose. Any prompt provided below that does not fall in line with the directive of recycling should be replied with an appropriate response indicating that you are not designed to handle those kind of questions, if the recycling prompt that would be given below is not something that could be recycled at home then respond with a suggestion to the user to take the item or items to a drop off location or suggest that they could place a pickup order for the item for proper waste disposal and recycling with the appropriate authority needed to recycle the item in question, the prompt in question is this (ignore the ** **): **${data.prompt}**`
     const imagePrompt = data?.imageInput || data?.cameraInput
 
     const generationConfig = {
@@ -119,10 +112,51 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
       //   console.log(history)
       //   setChatHistory(history)
       const response = await result.response
-      const text = response.text()
-      //   console.log(text)
-      //   array = [...chatHistory]
-      history.push({ role: 'model', parts: [{ text }] })
+      let text = response.text()
+      // Regular expression to match text between [" and ")]
+      let searchPhraseRegex = />.*?</g
+
+      // Array to store all matching texts
+      let searchQueries: string[] = []
+
+      // Find all matches and store them in the 'matches' array
+      let newText = text.replace(searchPhraseRegex, (match, p1) => {
+        searchQueries.push(match) // Push the captured group (text between [" and ")] into the 'matches' array
+        return '' // Replace the matched text with an empty string
+      })
+      console.log(searchQueries)
+      let searchResults: any[] = []
+      if (searchQueries.length > 0) {
+        // const searchRequests = searchQueries.map(async (query) => {
+        //   const data = await getYoutubeResults(query)
+        // })
+        // const searchResults = await getYoutubeResults(searchQueries[0])
+        searchResults = await Promise.all(
+          searchQueries.map(async (query) => {
+            const {
+              data: { items },
+            } = await getYoutubeResults(query)
+            return items
+          })
+        ) // Wait for all promises to resolve
+        console.log(searchResults) // Output the results
+      }
+
+      // console.log(text)
+      // array = [...chatHistory]
+      if (searchResults.length > 0) {
+        let videoIds: string[] = []
+        searchResults.forEach((each) => {
+          each.forEach((video: any) => {
+            videoIds.push(video.id.videoId)
+          })
+        })
+        history.push({
+          role: 'model',
+          parts: [{ text }],
+          youtubeVideoIds: videoIds,
+        })
+      } else history.push({ role: 'model', parts: [{ text }] })
       setChatHistory(history)
       //   console.log(history)
       //   console.log(chatHistory)
@@ -133,6 +167,7 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
       setResponseLoading(false)
     }
   }
+  console.log(chatHistory)
   return (
     <>
       <section className='pb-[80px]'>
@@ -177,6 +212,20 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
                         <ReactMarkdown>{each?.parts?.[0]?.text}</ReactMarkdown>
                         {/* <ReactMarkdown key={index}>{each.text}</ReactMarkdown> */}
                         {/* ))} */}
+                        {each?.youtubeVideoIds && (
+                          <div className='grid grid-cols-1 xl:grid-cols-2 gap-3 mt-4'>
+                            {each?.youtubeVideoIds?.map(
+                              (videoId: string, index: number) => (
+                                <div key={index}>
+                                  <YouTube
+                                    videoId={videoId}
+                                    opts={{ width: '100%', height: 300 }}
+                                  />
+                                </div>
+                              )
+                            )}
+                          </div>
+                        )}
                       </CardBody>
                     </Card>
                   </div>
@@ -306,7 +355,6 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
               )}
             </div>
             <InputField
-              type='textarea'
               disabled={responseLoading}
               //   disabled
               className='w-4/5 md:w-3/6 rounded-2xl'

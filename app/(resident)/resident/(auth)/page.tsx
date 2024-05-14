@@ -1,5 +1,5 @@
 import LoginForm from '@/components/resident/auth/LoginForm'
-import LoadingState from '@/components/elements/LoadingState'
+import LoadingState from '@/components/resident/elements/LoadingState'
 import { Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'

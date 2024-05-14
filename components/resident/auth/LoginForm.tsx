@@ -1,6 +1,6 @@
 'use client'
 import { portalLogin } from '@/api/portal-user/requests/auth'
-import InputField from '@/components/elements/InputField'
+import InputField from '@/components/resident/elements/InputField'
 import { Button, Link } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import { useRouter, useSearchParams } from 'next/navigation'
