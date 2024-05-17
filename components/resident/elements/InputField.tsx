@@ -7,7 +7,7 @@ import { Eye, EyeOff } from 'react-feather'
 interface InputFieldProps {
   label?: string
   type?: string
-  value?: string
+  value?: string | number
   placeholder?: string
   isRequired?: boolean
   isInvalid?: boolean

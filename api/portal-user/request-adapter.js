@@ -64,7 +64,7 @@ axiosInstance.interceptors.response.use(
         const cookieJar = Cookies.get() // Get all existing cookies
         for (const cookieName in cookieJar) {
           // Remove each cookie one by one
-          Cookies.remove(cookieName)
+          cookieName !== 'theme' ? Cookies.remove(cookieName) : null
         }
         window.location.href = '/resident'
 

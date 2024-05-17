@@ -1,16 +1,17 @@
+'use client'
 import type { FC } from 'react'
 
 interface StatusBadgeProps {
-  variant?: 'success' | 'pending' | 'cancelled'
+  type?: 'success' | 'pending' | 'cancelled'
   text?: string
 }
 
 const StatusBadge: FC<StatusBadgeProps> = ({
-  variant = 'success',
+  type = 'success',
   text = 'Completed',
 }) => {
   let color
-  switch (variant) {
+  switch (type) {
     case 'success':
       color = 'green'
       break
@@ -19,6 +20,9 @@ const StatusBadge: FC<StatusBadgeProps> = ({
       break
     case 'cancelled':
       color = 'red'
+      break
+    default:
+      color = 'green'
   }
   return (
     <span

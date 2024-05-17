@@ -1,6 +1,6 @@
 // 'use client'
 
-import PickupsTable from '@/components/resident/dashboard/pickups/PickupsTable'
+import PickupsTable from '@/components/resident/pickups/PickupsTable'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 import React from 'react'

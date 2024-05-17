@@ -4,11 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { FC } from 'react'
 import { ArrowRight, CornerUpRight } from 'react-feather'
-import PickupsTable from './pickups/PickupsTable'
+import PickupsTable from '@/components/resident/pickups/PickupsTable'
+import useGetPortalUser from '@/hooks/requests/resident/useGetPortalUser'
 
 interface DashboardSectionProps {}
 
 const DashboardSection: FC<DashboardSectionProps> = ({}) => {
+  const { portalUser } = useGetPortalUser()
   return (
     <>
       <div className='grid md:grid-cols-5 gap-6 w-full'>
@@ -22,7 +24,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({}) => {
             /> */}
             {/* <div className='space-y-5'> */}
             <h3 className='text-2xl sm:text-3xl font-bold'>
-              Welcome back Joshua
+              Welcome back {portalUser?.firstName}
             </h3>
             <Button variant='solid' color='primary' className='font-bold'>
               Order Trash Pickup

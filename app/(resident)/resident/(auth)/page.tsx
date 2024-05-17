@@ -19,7 +19,7 @@ const LoginPage = () => {
         </Link>
         <h1 className='text-2xl font-bold sm:text-2xl'>Login To Recylinker</h1>
         <p className='mt-4 text-gray-500'>
-          We&rsquo;re glad you&rsquo;r here 🤗
+          We&rsquo;re glad you&rsquo;re here 🤗
         </p>
       </div>
       <Suspense fallback={<LoadingState />}>

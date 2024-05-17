@@ -1,7 +1,8 @@
 'use client'
 import { portalLogin } from '@/api/portal-user/requests/auth'
 import InputField from '@/components/resident/elements/InputField'
-import { Button, Link } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
+import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -22,11 +23,13 @@ const LoginForm = () => {
   const submitData = async (formData: any) => {
     try {
       const { data } = await portalLogin(formData)
-      console.log(data)
-      Cookies.set('token', data.token, { expires: 30 })
-      Cookies.set('userId', data.user, { expires: 30 })
-
-      router.push(searchParams.get('callback') ?? '/resident/dashboard')
+      const { tokens } = data
+      Cookies.set('portalUserAccessToken', tokens.access.token, { expires: 30 })
+      Cookies.set('portalUserRefreshToken', tokens.refresh.token, {
+        expires: 30,
+      })
+      Cookies.set('userId', data.user.id, { expires: 30 })
+      router.push(searchParams.get('callback') || '/resident/dashboard')
 
       setKeepLoading(true)
     } catch (error: any) {
@@ -76,7 +79,7 @@ const LoginForm = () => {
           <p className='text-sm text-gray-500'>
             No account?
             <Link
-              className='ml-2'
+              className='ml-2 text-primary'
               href={`/resident/create-account?callback=${searchParams.get(
                 'callback'
               )}`}

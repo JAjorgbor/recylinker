@@ -16,7 +16,7 @@ import {
 } from '@nextui-org/react'
 import moment from 'moment'
 import { MoreVertical } from 'react-feather'
-import StatusBadge from '../../elements/StatusBadge'
+import StatusBadge from '../elements/StatusBadge'
 
 const PickupsTable = ({ className }: { className?: string }) => {
   return (

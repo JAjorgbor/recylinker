@@ -1,13 +1,16 @@
 'use client'
+import { toast } from 'sonner'
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
 } from '@nextui-org/react'
-
+import { useRouter } from 'next/navigation'
+import useGetPortalUser from '@/hooks/requests/resident/useGetPortalUser'
 import { setOpenSidebar } from '@/features/sidebarSlice'
 import { useAppDispatch, useAppSelector } from '@/features/store'
+import { portalLogOut } from '@/api/portal-user/requests/auth'
 import {
   Avatar,
   Navbar,
@@ -16,7 +19,7 @@ import {
   NavbarMenuToggle,
   Switch,
 } from '@nextui-org/react'
-import cookies from 'js-cookie'
+import Cookies from 'js-cookie'
 import React from 'react'
 import {
   LogOut,
@@ -30,10 +33,35 @@ import {
 export default function Header() {
   const dispatch = useAppDispatch()
   const [theme, setTheme] = React.useState('light')
+  const router = useRouter()
+
   const isSidebarOpen = useAppSelector((state) => state.sidebar.isOpen)
   React.useEffect(() => {
-    setTheme(cookies.get('theme') || 'light')
+    setTheme(Cookies.get('theme') || 'light')
   }, [])
+
+  const { portalUser } = useGetPortalUser()
+  const handlePortalLogout = async () => {
+    const toastId = toast.loading('Please wait...')
+    try {
+      await portalLogOut({
+        refreshToken: Cookies.get('portalUserRefreshToken') || '',
+      })
+      toast.warning('Logout successful.', {
+        id: toastId,
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      const cookieJar = Cookies.get() // Get all existing cookies
+      for (const cookieName in cookieJar) {
+        // Remove each cookie one by one
+        cookieName !== 'theme' ? Cookies.remove(cookieName) : null
+      }
+      window.location.href = '/resident'
+    }
+  }
+
   return (
     <Navbar>
       <NavbarContent>
@@ -60,7 +88,7 @@ export default function Header() {
             }
             onValueChange={(val) => {
               setTheme(val ? 'light' : 'dark')
-              cookies.set('theme', val ? 'light' : 'dark', { expires: 30 })
+              Cookies.set('theme', val ? 'light' : 'dark', { expires: 30 })
               document.documentElement.className = val ? 'light' : 'dark'
             }}
           />
@@ -68,7 +96,10 @@ export default function Header() {
         <NavbarItem>
           <Dropdown>
             <DropdownTrigger>
-              <Avatar className='cursor-pointer' />
+              <Avatar
+                className='cursor-pointer'
+                src={portalUser?.avatar || ''}
+              />
             </DropdownTrigger>
             <DropdownMenu>
               <DropdownItem key='1' startContent={<Settings size={15} />}>
@@ -83,6 +114,7 @@ export default function Header() {
                 variant='solid'
                 className='text-danger transition-colors'
                 startContent={<LogOut size={15} />}
+                onClick={handlePortalLogout}
               >
                 Log Out
               </DropdownItem>
