@@ -1,7 +1,7 @@
 'use client'
 import { portalLogin } from '@/api/portal-user/requests/auth'
-import InputField from '@/components/resident/elements/InputField'
-import { Button } from '@nextui-org/react'
+import InputField from '@/components/elements/InputField'
+import { Avatar, Button } from '@nextui-org/react'
 import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -61,9 +61,7 @@ const LoginForm = () => {
           isInvalid={!!errors.email}
           value={watch('email')}
           errorMessage={errors.email?.message as string}
-          onValueChange={(value: string) =>
-            setValue('email', value.toLowerCase())
-          }
+          onChange={(value: string) => setValue('email', value.toLowerCase())}
         />
 
         <InputField
@@ -80,9 +78,11 @@ const LoginForm = () => {
             No account?
             <Link
               className='ml-2 text-primary'
-              href={`/resident/create-account?callback=${searchParams.get(
-                'callback'
-              )}`}
+              href={`/resident/create-account${
+                searchParams.get('callback')
+                  ? '?callback=' + searchParams.get('callback')
+                  : ''
+              }`}
             >
               Create Account
             </Link>

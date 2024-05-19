@@ -1,7 +1,8 @@
 'use client'
 import { portalCreateAccount } from '@/api/portal-user/requests/auth'
-import InputField from '@/components/resident/elements/InputField'
-import { Button, Tab, Tabs } from '@nextui-org/react'
+import InputField from '@/components/elements/InputField'
+import useHandleImageDraft from '@/hooks/useHandleImageDraft'
+import { Avatar, Button, Tab, Tabs } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -10,11 +11,14 @@ import { ArrowLeft, ArrowRight, MapPin, User } from 'react-feather'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-const CreateAccount = () => {
+const CreateAccountForm = () => {
   const [keepLoading, setKeepLoading] = useState(false)
   const [selectedTab, setSelectedTab] = useState('personal-details')
   const [showSubmitButton, setShowSubmitButton] = useState(false)
   const [formFields, setFormFields] = useState({})
+  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState('')
+
+  const handleImageDraft = useHandleImageDraft()
 
   const searchParams = useSearchParams()
   const {
@@ -28,6 +32,7 @@ const CreateAccount = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
+      avatar: undefined,
       firstName: '',
       lastName: '',
       email: '',
@@ -74,13 +79,28 @@ const CreateAccount = () => {
       : setShowSubmitButton(false)
   }, [selectedTab])
 
-  const submitData = async (formData: any) => {
+  const submitData = async (formFields: any) => {
     try {
-      const { data } = await portalCreateAccount(formData)
-      console.log(data)
-      Cookies.set('token', data.token, { expires: 30 })
-      Cookies.set('userId', data.user, { expires: 30 })
+      const formData = new FormData()
+      let submittedData
+      if (!formFields.avatar) {
+        const { avatar, ...rest } = formFields
+        submittedData = rest
+      } else {
+        submittedData = formFields
+        submittedData.avatar = submittedData.avatar[0]
+      }
 
+      console.log(submittedData)
+      // return
+      // const { data } = await portalCreateAccount(formData)
+      const { data } = await portalCreateAccount(submittedData)
+      const { tokens } = data
+      console.log(data)
+      Cookies.set('portalUserAccessToken', tokens.access.token, { expires: 30 })
+      Cookies.set('portalUserRefreshToken', tokens.refresh.token, {
+        expires: 30,
+      })
       router.push(searchParams.get('callback') ?? '/resident/dashboard')
 
       setKeepLoading(true)
@@ -130,6 +150,21 @@ const CreateAccount = () => {
             }
           >
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              <div className='md:col-span-2 flex items-center flex-col gap-3'>
+                <label>
+                  <input
+                    type='file'
+                    accept='.jpg, .png, .jpeg'
+                    hidden
+                    {...register('avatar', {
+                      onChange: (e) =>
+                        handleImageDraft(e.target.files, setAvatarPreviewUrl),
+                    })}
+                  />
+                  <Avatar size='lg' src={avatarPreviewUrl} />
+                </label>
+                <p className='text-sm'>Profile Avatar</p>
+              </div>
               <InputField
                 type='text'
                 label='First Name'
@@ -167,7 +202,7 @@ const CreateAccount = () => {
                 isInvalid={!!errors.email}
                 value={watch('email')}
                 errorMessage={errors.email?.message as string}
-                onValueChange={(value: string) =>
+                onChange={(value: string) =>
                   setValue('email', value.toLowerCase())
                 }
               />
@@ -342,4 +377,4 @@ const CreateAccount = () => {
     </>
   )
 }
-export default CreateAccount
+export default CreateAccountForm

@@ -1,5 +1,5 @@
-import CreateAccount from '@/components/resident/auth/CreateAccountForm'
-import LoadingState from '@/components/resident/elements/LoadingState'
+import CreateAccountForm from '@/components/resident/auth/CreateAccountForm'
+import LoadingState from '@/components/elements/LoadingState'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense, type FC } from 'react'
@@ -28,7 +28,7 @@ const page: FC<pageProps> = ({}) => {
           </p>
         </div>
         <Suspense fallback={<LoadingState />}>
-          <CreateAccount />
+          <CreateAccountForm />
         </Suspense>
       </main>
     </>

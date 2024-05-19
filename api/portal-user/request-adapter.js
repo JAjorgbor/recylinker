@@ -34,14 +34,11 @@ axiosInstance.interceptors.response.use(
       !originalConfig._retry
     ) {
       originalConfig._retry = false
-      const refreshToken = Cookies.get('portalRefreshToken')
       try {
-        const { data } = await axiosInstance.post(
-          'portal/auth/refresh-tokens',
-          {
-            refreshToken,
-          }
-        )
+        const refreshToken = Cookies.get('portalUserRefreshToken')
+        const { data } = await axiosInstance.post('auth/refresh-tokens', {
+          refreshToken,
+        })
 
         const newRefreshToken = data.refresh.token
 
@@ -62,11 +59,11 @@ axiosInstance.interceptors.response.use(
         console.log(error)
         // Redirect to login page here
         const cookieJar = Cookies.get() // Get all existing cookies
-        for (const cookieName in cookieJar) {
-          // Remove each cookie one by one
-          cookieName !== 'theme' ? Cookies.remove(cookieName) : null
-        }
-        window.location.href = '/resident'
+        // for (const cookieName in cookieJar) {
+        //   // Remove each cookie one by one
+        //   cookieName !== 'theme' ? Cookies.remove(cookieName) : null
+        // }
+        // window.location.href = '/resident'
 
         return Promise.reject(error)
       }

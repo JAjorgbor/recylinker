@@ -2,8 +2,8 @@ import { Button, Card, CardBody, CardHeader } from '@nextui-org/react'
 import type { FC } from 'react'
 import Image from 'next/image'
 import { CornerUpRight, Search } from 'react-feather'
-import InputField from '@/components/resident/elements/InputField'
-import MapView from '@/components/resident/elements/MapView'
+import InputField from '@/components/elements/InputField'
+import MapView from '@/components/elements/MapView'
 
 interface DropPointsSectionProps {}
 

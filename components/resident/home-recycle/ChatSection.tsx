@@ -1,6 +1,6 @@
 'use client'
 import { getYoutubeResults } from '@/api/portal-user/requests/chat'
-import InputField from '@/components/resident/elements/InputField'
+import InputField from '@/components/elements/InputField'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { Avatar, Card, CardBody, Skeleton } from '@nextui-org/react'
 import Image from 'next/image'
