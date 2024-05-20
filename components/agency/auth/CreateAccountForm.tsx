@@ -1,8 +1,10 @@
 'use client'
-import { portalCreateAccount } from '@/api/portal-user/requests/auth'
+import { portalAgencyCreateAccount } from '@/api/portal-agency/requests/auth'
 import InputField from '@/components/elements/InputField'
+import useGetFormData from '@/hooks/useGetFormData'
 import useHandleImageDraft from '@/hooks/useHandleImageDraft'
-import { Avatar, Button, Card, CardBody, Tab, Tabs } from '@nextui-org/react'
+import { recyclableMaterials } from '@/libraries/recyclable-materials-categories'
+import { Button, Card, CardBody, Tab, Tabs } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,7 +13,6 @@ import { useEffect, useState } from 'react'
 import { ArrowLeft, ArrowRight, Camera, MapPin, User } from 'react-feather'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { recyclableMaterials } from '@/libraries/recyclable-materials-categories'
 
 const CreateAccountForm = () => {
   const [keepLoading, setKeepLoading] = useState(false)
@@ -42,16 +43,19 @@ const CreateAccountForm = () => {
       confirmPassword: '',
       recyclableCategories: '',
       phoneNumber: '',
+      locationPhotos1: undefined,
+      locationPhotos2: undefined,
+      locationPhotos3: undefined,
       address: {
         street: '',
         city: '',
         longitude: 0,
         latitude: 0,
-        locationPhotos: [undefined, undefined, undefined],
       },
     },
   })
   const router = useRouter()
+  const objectToFormData = useGetFormData()
 
   useEffect(() => {
     const subscribe = watch((values) => {
@@ -95,28 +99,22 @@ const CreateAccountForm = () => {
 
   const submitData = async (formFields: any) => {
     try {
-      const formData = new FormData()
-      let submittedData
-      if (!formFields.brandLogo) {
-        const { brandLogo, ...rest } = formFields
-        submittedData = rest
-      } else {
-        submittedData = formFields
-        submittedData.brandLogo = submittedData.brandLogo[0]
-      }
-
-      console.log(submittedData)
-      // return
-      // const { data } = await portalCreateAccount(formData)
-      const { data } = await portalCreateAccount(submittedData)
+      let submittedData = formFields
+      submittedData.brandLogo = submittedData.brandLogo[0]
+      submittedData.locationPhotos1 = submittedData.locationPhotos1[0]
+      submittedData.locationPhotos2 = submittedData.locationPhotos2[0]
+      submittedData.locationPhotos3 = submittedData.locationPhotos3[0]
+      const formData = objectToFormData(submittedData)
+      const { data } = await portalAgencyCreateAccount(formData)
       const { tokens } = data
       console.log(data)
-      Cookies.set('portalUserAccessToken', tokens.access.token, { expires: 30 })
-      Cookies.set('portalUserRefreshToken', tokens.refresh.token, {
+      Cookies.set('portalAgencyAccessToken', tokens.access.token, {
         expires: 30,
       })
-      router.push(searchParams.get('callback') ?? '/resident/dashboard')
-
+      Cookies.set('portalAgencyRefreshToken', tokens.refresh.token, {
+        expires: 30,
+      })
+      router.push(searchParams.get('callback') ?? '/agency/dashboard')
       setKeepLoading(true)
     } catch (error: any) {
       console.error(error)
@@ -400,53 +398,119 @@ const CreateAccountForm = () => {
                     </small>
                   </div>
                   <small className='text-sm text-danger'>
-                    {(!errors?.address?.locationPhotos?.[0]?.message &&
-                      !errors?.address?.locationPhotos?.[1]?.message &&
-                      !errors?.address?.locationPhotos?.[2]?.message) ||
+                    {(!errors?.locationPhotos1?.message &&
+                      !errors?.locationPhotos2?.message &&
+                      !errors?.locationPhotos3?.message) ||
                       "Please capture 3 images of the agency's location"}
                   </small>
                 </div>
 
                 <div className='flex gap-3'>
-                  {Array(3)
-                    .fill(null)
-                    .map((each: any, index: number) => (
-                      <label key={index}>
-                        <div
-                          className={`w-[100px] h-[80px] border ${
-                            !!errors?.address?.locationPhotos?.[index]?.message
-                              ? 'border-danger text-danger'
-                              : 'border-primary text-primary'
-                          } rounded-lg grid place-items-center text-primary bg-contain bg-center`}
-                          style={{
-                            backgroundRepeat: 'no-repeat',
-                            backgroundImage: `url('${
-                              locationPhotosUrls[index] ||
-                              'https://dummyImage.com/100x80'
-                            }')`,
-                          }}
-                        >
-                          <Camera size={20} />
-                        </div>
-                        <input
-                          type='file'
-                          accept='.jpg, .png, .jpeg'
-                          capture='environment'
-                          hidden
-                          {...register(`address.locationPhotos.${index}`, {
-                            validate: (value: any) =>
-                              value?.[0] || 'Please capture an image',
-                            onChange: (e) => {
-                              handleImageDraft(
-                                e.target.files,
-                                handleLocationPhotosUpload,
-                                index
-                              )
-                            },
-                          })}
-                        />
-                      </label>
-                    ))}
+                  <label>
+                    <div
+                      className={`w-[100px] h-[80px] border ${
+                        !!errors.locationPhotos1?.message
+                          ? 'border-danger text-danger'
+                          : 'border-primary text-primary'
+                      } rounded-lg grid place-items-center text-primary bg-contain bg-center`}
+                      style={{
+                        backgroundRepeat: 'no-repeat',
+                        backgroundImage: `url('${
+                          locationPhotosUrls[1] ||
+                          'https://dummyImage.com/100x80'
+                        }')`,
+                      }}
+                    >
+                      <Camera size={20} />
+                    </div>
+                    <input
+                      type='file'
+                      accept='.jpg, .png, .jpeg'
+                      capture='environment'
+                      hidden
+                      {...register('locationPhotos1', {
+                        validate: (value: any) =>
+                          value?.[0] || 'Please capture an image',
+                        onChange: (e) => {
+                          handleImageDraft(
+                            e.target.files,
+                            handleLocationPhotosUpload,
+                            1
+                          )
+                        },
+                      })}
+                    />
+                  </label>
+                  <label>
+                    <div
+                      className={`w-[100px] h-[80px] border ${
+                        !!errors.locationPhotos2?.message
+                          ? 'border-danger text-danger'
+                          : 'border-primary text-primary'
+                      } rounded-lg grid place-items-center text-primary bg-contain bg-center`}
+                      style={{
+                        backgroundRepeat: 'no-repeat',
+                        backgroundImage: `url('${
+                          locationPhotosUrls[2] ||
+                          'https://dummyImage.com/100x80'
+                        }')`,
+                      }}
+                    >
+                      <Camera size={20} />
+                    </div>
+                    <input
+                      type='file'
+                      accept='.jpg, .png, .jpeg'
+                      capture='environment'
+                      hidden
+                      {...register('locationPhotos2', {
+                        validate: (value: any) =>
+                          value?.[0] || 'Please capture an image',
+                        onChange: (e) => {
+                          handleImageDraft(
+                            e.target.files,
+                            handleLocationPhotosUpload,
+                            2
+                          )
+                        },
+                      })}
+                    />
+                  </label>
+                  <label>
+                    <div
+                      className={`w-[100px] h-[80px] border ${
+                        !!errors.locationPhotos3?.message
+                          ? 'border-danger text-danger'
+                          : 'border-primary text-primary'
+                      } rounded-lg grid place-items-center text-primary bg-contain bg-center`}
+                      style={{
+                        backgroundRepeat: 'no-repeat',
+                        backgroundImage: `url('${
+                          locationPhotosUrls[3] ||
+                          'https://dummyImage.com/100x80'
+                        }')`,
+                      }}
+                    >
+                      <Camera size={20} />
+                    </div>
+                    <input
+                      type='file'
+                      accept='.jpg, .png, .jpeg'
+                      capture='environment'
+                      hidden
+                      {...register('locationPhotos3', {
+                        validate: (value: any) =>
+                          value?.[0] || 'Please capture an image',
+                        onChange: (e) => {
+                          handleImageDraft(
+                            e.target.files,
+                            handleLocationPhotosUpload,
+                            3
+                          )
+                        },
+                      })}
+                    />
+                  </label>
                 </div>
               </div>
             </Tab>

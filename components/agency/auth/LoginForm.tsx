@@ -25,12 +25,12 @@ const LoginForm = () => {
     try {
       const { data } = await portalLogin(formData)
       const { tokens } = data
-      Cookies.set('portalUserAccessToken', tokens.access.token, { expires: 30 })
-      Cookies.set('portalUserRefreshToken', tokens.refresh.token, {
+      Cookies.set('portalAuthAccessToken', tokens.access.token, { expires: 30 })
+      Cookies.set('portalAuthRefreshToken', tokens.refresh.token, {
         expires: 30,
       })
       Cookies.set('userId', data.user.id, { expires: 30 })
-      router.push(searchParams.get('callback') || '/resident/dashboard')
+      router.push(searchParams.get('callback') || '/agency/dashboard')
 
       setKeepLoading(true)
     } catch (error: any) {
