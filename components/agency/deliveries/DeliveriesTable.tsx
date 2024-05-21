@@ -1,4 +1,5 @@
 'use client'
+import type { FC } from 'react'
 import {
   Dropdown,
   DropdownItem,
@@ -18,14 +19,18 @@ import moment from 'moment'
 import { MoreVertical } from 'react-feather'
 import StatusBadge from '@/components/elements/StatusBadge'
 
-const PickupsTable = ({ className }: { className?: string }) => {
+interface DeliveriesTableProps {
+  className?: string
+}
+
+const DeliveriesTable: FC<DeliveriesTableProps> = ({ className }) => {
   return (
-    <div className={className ?? 'md:w-[90%] mx-auto'}>
+    <>
       <Table>
         <TableHeader>
           <TableColumn className='min-w-[150px]'>DRIVER NAME</TableColumn>
-          <TableColumn>DRIVER PHONE NUMBER</TableColumn>
-          <TableColumn className='min-w-[200px]'>PICK UP DATE</TableColumn>
+          <TableColumn>MANUFACTURER PHONE NUMBER</TableColumn>
+          <TableColumn className='min-w-[200px]'>DELIVERY DATE</TableColumn>
           <TableColumn>STATUS</TableColumn>
           <TableColumn>ACTION</TableColumn>
         </TableHeader>
@@ -67,8 +72,7 @@ const PickupsTable = ({ className }: { className?: string }) => {
             ))}
         </TableBody>
       </Table>
-    </div>
+    </>
   )
 }
-
-export default PickupsTable
+export default DeliveriesTable

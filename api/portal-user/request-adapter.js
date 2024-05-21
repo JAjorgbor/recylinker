@@ -59,11 +59,11 @@ axiosInstance.interceptors.response.use(
         console.log(error)
         // Redirect to login page here
         const cookieJar = Cookies.get() // Get all existing cookies
-        // for (const cookieName in cookieJar) {
-        //   // Remove each cookie one by one
-        //   cookieName !== 'theme' ? Cookies.remove(cookieName) : null
-        // }
-        // window.location.href = '/resident'
+        for (const cookieName in cookieJar) {
+          // Remove each cookie one by one
+          cookieName !== 'theme' ? Cookies.remove(cookieName) : null
+        }
+        window.location.href = '/resident'
 
         return Promise.reject(error)
       }

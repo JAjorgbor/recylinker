@@ -1,14 +1,14 @@
 'use client'
-import { portalLogin } from '@/api/portal-user/requests/auth'
+import { portalAgencyLogin } from '@/api/portal-agency/requests/auth'
 import InputField from '@/components/elements/InputField'
-import { Avatar, Button, Card, CardBody, CardHeader } from '@nextui-org/react'
-import Link from 'next/link'
+import { Button, Card, CardBody, CardHeader } from '@nextui-org/react'
 import Cookies from 'js-cookie'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import Image from 'next/image'
 
 const LoginForm = () => {
   const [keepLoading, setKeepLoading] = useState(false)
@@ -23,10 +23,12 @@ const LoginForm = () => {
   const router = useRouter()
   const submitData = async (formData: any) => {
     try {
-      const { data } = await portalLogin(formData)
+      const { data } = await portalAgencyLogin(formData)
       const { tokens } = data
-      Cookies.set('portalAuthAccessToken', tokens.access.token, { expires: 30 })
-      Cookies.set('portalAuthRefreshToken', tokens.refresh.token, {
+      Cookies.set('portalAgencyAccessToken', tokens.access.token, {
+        expires: 30,
+      })
+      Cookies.set('portalAgencyRefreshToken', tokens.refresh.token, {
         expires: 30,
       })
       Cookies.set('userId', data.user.id, { expires: 30 })

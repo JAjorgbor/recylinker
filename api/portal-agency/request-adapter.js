@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(async (config) => {
-  const accessToken = Cookies.get('portalAuthAccessToken')
+  const accessToken = Cookies.get('portalAgencyAccessToken')
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`
   }
@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
     ) {
       originalConfig._retry = false
       try {
-        const refreshToken = Cookies.get('portalAuthRefreshToken')
+        const refreshToken = Cookies.get('portalAgencyRefreshToken')
         const { data } = await axiosInstance.post('auth/refresh-tokens', {
           refreshToken,
         })
@@ -43,9 +43,11 @@ axiosInstance.interceptors.response.use(
         const newRefreshToken = data.refresh.token
 
         // Update local storage with new refresh token
-        Cookies.set('portalAuthRefreshToken', newRefreshToken, { expires: 30 })
+        Cookies.set('portalAgencyRefreshToken', newRefreshToken, {
+          expires: 30,
+        })
 
-        Cookies.set('portalAuthAccessToken', data.access.token)
+        Cookies.set('portalAgencyAccessToken', data.access.token)
 
         // Update the authorization header for the instance
         axiosInstance.defaults.headers.Authorization = `Bearer ${data.access.token}`
@@ -59,11 +61,11 @@ axiosInstance.interceptors.response.use(
         console.log(error)
         // Redirect to login page here
         const cookieJar = Cookies.get() // Get all existing cookies
-        // for (const cookieName in cookieJar) {
-        //   // Remove each cookie one by one
-        //   cookieName !== 'theme' ? Cookies.remove(cookieName) : null
-        // }
-        // window.location.href = '/resident'
+        for (const cookieName in cookieJar) {
+          // Remove each cookie one by one
+          cookieName !== 'theme' ? Cookies.remove(cookieName) : null
+        }
+        window.location.href = '/agency'
 
         return Promise.reject(error)
       }

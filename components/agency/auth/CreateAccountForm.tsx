@@ -114,8 +114,8 @@ const CreateAccountForm = () => {
       Cookies.set('portalAgencyRefreshToken', tokens.refresh.token, {
         expires: 30,
       })
-      router.push(searchParams.get('callback') ?? '/agency/dashboard')
-      setKeepLoading(true)
+      // router.push(searchParams.get('callback') ?? '/agency/dashboard')
+      // setKeepLoading(true)
     } catch (error: any) {
       console.error(error)
       toast.error(

@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "scaffold/Sidebar.jsx", "api/portal-user/request-adapter.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "scaffold/Sidebar.jsx", "api/portal-user/request-adapter.js", "scaffold/agency/Sidebar.jsx"],
   "exclude": ["node_modules"]
 }

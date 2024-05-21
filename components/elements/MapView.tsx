@@ -1,10 +1,10 @@
 'use client'
-import { Map } from '@vis.gl/react-google-maps'
+import { Map, Marker } from '@vis.gl/react-google-maps'
 import React from 'react'
 
 const center = {
-  lat: 7.4481664,
-  lng: 9.060352,
+  lat: 9.2915,
+  lng: 7.4276,
 }
 
 function MapView() {
@@ -13,11 +13,13 @@ function MapView() {
       <div className='w-full h-full'>
         <Map
           style={{ width: '100%', height: '100%' }}
-          defaultCenter={{ lat: 7.4277, lng: 9.2914 }}
+          defaultCenter={center}
           defaultZoom={50}
           gestureHandling={'greedy'}
-          disableDefaultUI={true}
-        />
+          // disableDefaultUI={true}
+        >
+          <Marker position={center} />
+        </Map>
       </div>
     </>
   )
