@@ -347,11 +347,10 @@ const CreateAccountForm = () => {
               <div className='space-y-2 md:col-span-2'>
                 <div>
                   <p className='text-sm'>
-                    Agency Location Photos{' '}
-                    <span className='text-danger'>*</span>
+                    User Location Photos <span className='text-danger'>*</span>
                   </p>
                   <small className='text-sm text-foreground-300'>
-                    Photos of the agency&apos;s physical location.{' '}
+                    Photos of the of your physical location.{' '}
                   </small>
                 </div>
                 <small className='text-sm text-danger'>
