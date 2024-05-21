@@ -99,13 +99,7 @@ const CreateAccountForm = () => {
 
   const submitData = async (formFields: any) => {
     try {
-      let submittedData = formFields
-      submittedData.brandLogo = submittedData.brandLogo[0]
-      submittedData.locationPhotos1 = submittedData.locationPhotos1[0]
-      submittedData.locationPhotos2 = submittedData.locationPhotos2[0]
-      submittedData.locationPhotos3 = submittedData.locationPhotos3[0]
-      const formData = objectToFormData(submittedData)
-      const { data } = await portalAgencyCreateAccount(formData)
+      const { data } = await portalAgencyCreateAccount(formFields)
       const { tokens } = data
       console.log(data)
       Cookies.set('portalAgencyAccessToken', tokens.access.token, {
@@ -114,8 +108,8 @@ const CreateAccountForm = () => {
       Cookies.set('portalAgencyRefreshToken', tokens.refresh.token, {
         expires: 30,
       })
-      // router.push(searchParams.get('callback') ?? '/agency/dashboard')
-      // setKeepLoading(true)
+      router.push(searchParams.get('callback') ?? '/agency/dashboard')
+      setKeepLoading(true)
     } catch (error: any) {
       console.error(error)
       toast.error(

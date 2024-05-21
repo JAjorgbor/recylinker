@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { ArrowLeft, ArrowRight, MapPin, User } from 'react-feather'
+import { ArrowLeft, ArrowRight, MapPin, User, Camera } from 'react-feather'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -17,6 +17,13 @@ const CreateAccountForm = () => {
   const [showSubmitButton, setShowSubmitButton] = useState(false)
   const [formFields, setFormFields] = useState({})
   const [avatarPreviewUrl, setAvatarPreviewUrl] = useState('')
+  const [locationPhotosUrls, setAgencyLocationPhotoPreviewUrls] = useState([])
+
+  const handleLocationPhotosUpload = (imageUrl: string, index: number) => {
+    const arr = [...locationPhotosUrls] as any
+    arr[index] = imageUrl
+    setAgencyLocationPhotoPreviewUrls(arr)
+  }
 
   const handleImageDraft = useHandleImageDraft()
 
@@ -39,6 +46,9 @@ const CreateAccountForm = () => {
       password: '',
       confirmPassword: '',
       phoneNumber: '',
+      locationPhotos1: undefined,
+      locationPhotos2: undefined,
+      locationPhotos3: undefined,
       address: {
         street: '',
         city: '',
@@ -115,6 +125,7 @@ const CreateAccountForm = () => {
   }
   const handleSelectedTabChange = async (key: any) => {
     const isPersonalDetailsValid = await trigger([
+      'avatar',
       'firstName',
       'lastName',
       'email',
@@ -157,13 +168,18 @@ const CreateAccountForm = () => {
                     accept='.jpg, .png, .jpeg'
                     hidden
                     {...register('avatar', {
+                      validate: (value: any) =>
+                        value?.[0] || 'Profile Avatar is required',
                       onChange: (e) =>
                         handleImageDraft(e.target.files, setAvatarPreviewUrl),
                     })}
                   />
                   <Avatar size='lg' src={avatarPreviewUrl} />
                 </label>
-                <p className='text-sm'>Profile Avatar</p>
+                <p className='text-sm'>
+                  Profile Avatar<span className='text-danger'>*</span>
+                </p>
+                <p className='text-xs text-danger'>{errors?.avatar?.message}</p>
               </div>
               <InputField
                 type='text'
@@ -328,6 +344,127 @@ const CreateAccountForm = () => {
                 value={watch('address.latitude')}
                 errorMessage={errors.address?.latitude?.message as string}
               />
+              <div className='space-y-2 md:col-span-2'>
+                <div>
+                  <p className='text-sm'>
+                    Agency Location Photos{' '}
+                    <span className='text-danger'>*</span>
+                  </p>
+                  <small className='text-sm text-foreground-300'>
+                    Photos of the agency&apos;s physical location.{' '}
+                  </small>
+                </div>
+                <small className='text-sm text-danger'>
+                  {(!errors?.locationPhotos1?.message &&
+                    !errors?.locationPhotos2?.message &&
+                    !errors?.locationPhotos3?.message) ||
+                    "Please capture 3 images of the agency's location"}
+                </small>
+              </div>
+              <div className='flex gap-3'>
+                <label>
+                  <div
+                    className={`w-[100px] h-[80px] border ${
+                      !!errors.locationPhotos1?.message
+                        ? 'border-danger text-danger'
+                        : 'border-primary text-primary'
+                    } rounded-lg grid place-items-center text-primary bg-contain bg-center`}
+                    style={{
+                      backgroundRepeat: 'no-repeat',
+                      backgroundImage: `url('${
+                        locationPhotosUrls[1] || 'https://dummyImage.com/100x80'
+                      }')`,
+                    }}
+                  >
+                    <Camera size={20} />
+                  </div>
+                  <input
+                    type='file'
+                    accept='.jpg, .png, .jpeg'
+                    capture='environment'
+                    hidden
+                    {...register('locationPhotos1', {
+                      validate: (value: any) =>
+                        value?.[0] || 'Please capture an image',
+                      onChange: (e) => {
+                        handleImageDraft(
+                          e.target.files,
+                          handleLocationPhotosUpload,
+                          1
+                        )
+                      },
+                    })}
+                  />
+                </label>
+                <label>
+                  <div
+                    className={`w-[100px] h-[80px] border ${
+                      !!errors.locationPhotos2?.message
+                        ? 'border-danger text-danger'
+                        : 'border-primary text-primary'
+                    } rounded-lg grid place-items-center text-primary bg-contain bg-center`}
+                    style={{
+                      backgroundRepeat: 'no-repeat',
+                      backgroundImage: `url('${
+                        locationPhotosUrls[2] || 'https://dummyImage.com/100x80'
+                      }')`,
+                    }}
+                  >
+                    <Camera size={20} />
+                  </div>
+                  <input
+                    type='file'
+                    accept='.jpg, .png, .jpeg'
+                    capture='environment'
+                    hidden
+                    {...register('locationPhotos2', {
+                      validate: (value: any) =>
+                        value?.[0] || 'Please capture an image',
+                      onChange: (e) => {
+                        handleImageDraft(
+                          e.target.files,
+                          handleLocationPhotosUpload,
+                          2
+                        )
+                      },
+                    })}
+                  />
+                </label>
+                <label>
+                  <div
+                    className={`w-[100px] h-[80px] border ${
+                      !!errors.locationPhotos3?.message
+                        ? 'border-danger text-danger'
+                        : 'border-primary text-primary'
+                    } rounded-lg grid place-items-center text-primary bg-contain bg-center`}
+                    style={{
+                      backgroundRepeat: 'no-repeat',
+                      backgroundImage: `url('${
+                        locationPhotosUrls[3] || 'https://dummyImage.com/100x80'
+                      }')`,
+                    }}
+                  >
+                    <Camera size={20} />
+                  </div>
+                  <input
+                    type='file'
+                    accept='.jpg, .png, .jpeg'
+                    capture='environment'
+                    hidden
+                    {...register('locationPhotos3', {
+                      validate: (value: any) =>
+                        value?.[0] || 'Please capture an image',
+                      onChange: (e) => {
+                        handleImageDraft(
+                          e.target.files,
+                          handleLocationPhotosUpload,
+                          3
+                        )
+                      },
+                    })}
+                  />
+                </label>
+              </div>
             </div>
           </Tab>
         </Tabs>
