@@ -106,11 +106,16 @@ const CreateAccountForm = () => {
 
   const submitData = async (formFields: any) => {
     try {
-      formFields.brandLogo = compressImage(formFields.brandLogo)
-      formFields.locationPhotos1 = compressImage(formFields.locationPhotos1)
-      formFields.locationPhotos2 = compressImage(formFields.locationPhotos2)
-      formFields.locationPhotos3 = compressImage(formFields.locationPhotos3)
-
+      formFields.brandLogo = await compressImage(formFields.brandLogo)
+      formFields.locationPhotos1 = await compressImage(
+        formFields.locationPhotos1
+      )
+      formFields.locationPhotos2 = await compressImage(
+        formFields.locationPhotos2
+      )
+      formFields.locationPhotos3 = await compressImage(
+        formFields.locationPhotos3
+      )
       const { data } = await portalAgencyCreateAccount(formFields)
       const { tokens } = data
       console.log(data)
