@@ -1,4 +1,4 @@
-import DropOffsTable from '@/components/agency/drop-offs/DropOffsTable'
+import OrderPickupForm from '@/components/resident/pickups/OrderPickupForm'
 import type { FC } from 'react'
 
 interface pageProps {}
@@ -6,7 +6,7 @@ interface pageProps {}
 const page: FC<pageProps> = ({}) => {
   return (
     <>
-      <DropOffsTable />
+      <OrderPickupForm />
     </>
   )
 }

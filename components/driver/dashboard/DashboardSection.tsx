@@ -1,5 +1,4 @@
 'use client'
-import useGetPortalAgency from '@/hooks/requests/agency/useGetPortalAgency'
 import { Button, Card, CardBody, CardHeader } from '@nextui-org/react'
 import type { FC } from 'react'
 import Link from 'next/link'
@@ -9,7 +8,6 @@ import { ArrowRight, ExternalLink } from 'react-feather'
 interface DashboardSectionProps {}
 
 const DashboardSection: FC<DashboardSectionProps> = ({}) => {
-  const { portalAgency, portalAgencyLoading } = useGetPortalAgency()
   return (
     <>
       <div className='grid md:grid-cols-2 gap-6 w-full'>
@@ -20,7 +18,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({}) => {
               <Button
                 as={Link}
                 color='primary'
-                href='/agency/drop-offs'
+                href='/driver/drop-offs'
                 endContent={<ExternalLink size={17} />}
               >
                 Manage Drop Offs
@@ -36,7 +34,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({}) => {
               <Button
                 as={Link}
                 color='primary'
-                href='/agency/deliveries'
+                href='/driver/deliveries'
                 endContent={<ExternalLink size={17} />}
               >
                 Manage Deliveries
