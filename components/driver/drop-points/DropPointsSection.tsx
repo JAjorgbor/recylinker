@@ -1,5 +1,6 @@
+'use client'
 import { Button, Card, CardBody, CardHeader } from '@nextui-org/react'
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 import Image from 'next/image'
 import { CornerUpRight, Search } from 'react-feather'
 import InputField from '@/components/elements/InputField'
@@ -8,6 +9,10 @@ import MapView from '@/components/elements/MapView'
 interface DropPointsSectionProps {}
 
 const DropPointsSection: FC<DropPointsSectionProps> = ({}) => {
+  const [latLng, setLatLng] = useState({ lat: 9.2243, lng: 7.4165 })
+  const handleLatLng = (lat: number, lng: number) => {
+    setLatLng({ lat, lng })
+  }
   return (
     <>
       <Card>
@@ -26,48 +31,52 @@ const DropPointsSection: FC<DropPointsSectionProps> = ({}) => {
               />
               <div className='flex flex-col h-[500px] overflow-y-auto p-3 gap-6'>
                 <Card className='min-h-[140px]'>
-                  <CardBody className='gap-4'>
-                    <p>Golf Estate Rd, Okuru Ama Town, Port Harcourt</p>
+                  <CardBody className='justify-between'>
+                    <p>Wuye Recycling Agency</p>
                     <Button
                       endContent={<CornerUpRight size={15} />}
                       variant='ghost'
                       color='primary'
+                      onClick={() => handleLatLng(9.0502, 7.444)}
                     >
                       Get Directions
                     </Button>
                   </CardBody>
                 </Card>
                 <Card className='min-h-[140px]'>
-                  <CardBody className='gap-4'>
-                    <p>Golf Estate Rd, Okuru Ama Town, Port Harcourt</p>
+                  <CardBody className='justify-between'>
+                    <p>Kubwa Recycling Agency</p>
                     <Button
                       endContent={<CornerUpRight size={15} />}
                       variant='ghost'
                       color='primary'
+                      onClick={() => handleLatLng(9.1538, 7.322)}
                     >
                       Get Directions
                     </Button>
                   </CardBody>
                 </Card>
                 <Card className='min-h-[140px]'>
-                  <CardBody className='gap-4'>
-                    <p>Maitaima, Port Harcourt</p>
+                  <CardBody className='justify-between'>
+                    <p>Zuma Recycling Agency</p>
                     <Button
                       endContent={<CornerUpRight size={15} />}
                       variant='ghost'
                       color='primary'
+                      onClick={() => handleLatLng(9.1256, 7.2289)}
                     >
                       Get Directions
                     </Button>
                   </CardBody>
                 </Card>
                 <Card className='min-h-[140px]'>
-                  <CardBody className='gap-4'>
-                    <p>Golf Estate Rd, Okuru Ama Town, Port Harcourt</p>
+                  <CardBody className='justify-between'>
+                    <p>Maitama Recycling Agency</p>
                     <Button
                       endContent={<CornerUpRight size={15} />}
                       variant='ghost'
                       color='primary'
+                      onClick={() => handleLatLng(9.0882, 7.4934)}
                     >
                       Get Directions
                     </Button>
@@ -83,7 +92,7 @@ const DropPointsSection: FC<DropPointsSectionProps> = ({}) => {
                 className='h-full w-full'
                 height={500}
               /> */}
-              <MapView />
+              <MapView lat={latLng.lat} lng={latLng.lng} />
             </div>
           </div>
         </CardBody>

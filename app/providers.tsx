@@ -14,11 +14,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <>
       <Toaster richColors closeButton position='top-center' />
       <Provider store={store}>
-        <GoogleMapsApiProvider
+        {/* <GoogleMapsApiProvider
           apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}
-        >
-          <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
-        </GoogleMapsApiProvider>
+        > */}
+        <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
+        {/* </GoogleMapsApiProvider> */}
       </Provider>
     </>
   )
