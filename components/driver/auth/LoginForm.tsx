@@ -113,6 +113,7 @@ const LoginForm = () => {
               color='primary'
               isLoading={isSubmitting || keepLoading}
               type='button'
+              onClick={() => router.push('/driver/dashboard')}
             >
               Login
             </Button>
