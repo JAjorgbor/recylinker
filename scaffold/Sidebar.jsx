@@ -70,7 +70,7 @@ const SidebarContent = () => {
           <Monitor size={15} className='text-primary' />
           Dashboard
         </Link>
-        <Link
+        {/* <Link
           className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
             pathname == '/resident/drop-points'
               ? 'bg-default-200 text-primary'
@@ -80,7 +80,7 @@ const SidebarContent = () => {
         >
           <Map size={15} className='text-primary' />
           Drop Points
-        </Link>
+        </Link> */}
         <Link
           className={`p-3 flex gap-3 items-center rounded-lg text-sm focus:bg-default-100 focus:text-primary hover:bg-default-50 hover:text-primary ${
             pathname == '/resident/pickups' ? 'bg-default-100 t2xt-primary' : ''

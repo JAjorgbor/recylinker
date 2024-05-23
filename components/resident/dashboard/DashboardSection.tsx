@@ -30,6 +30,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({}) => {
               variant='solid'
               color='primary'
               className='font-bold'
+              as={Link}
               href='/resident/pickups/order-pickup'
             >
               Order Trash Pickup
