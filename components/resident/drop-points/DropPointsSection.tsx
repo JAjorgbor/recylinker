@@ -83,7 +83,7 @@ const DropPointsSection: FC<DropPointsSectionProps> = ({}) => {
                 className='h-full w-full'
                 height={500}
               /> */}
-              <MapView />
+              {/* <MapView /> */}
             </div>
           </div>
         </CardBody>
