@@ -5,11 +5,13 @@ import useHandleImageDraft from '@/hooks/useHandleImageDraft'
 import { Avatar, Button, Tab, Tabs } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import Link from 'next/link'
+import imageCompression from 'browser-image-compression'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ArrowLeft, ArrowRight, MapPin, User, Camera } from 'react-feather'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import useImageCompressor from '@/hooks/useImageCompressor'
 
 const CreateAccountForm = () => {
   const [keepLoading, setKeepLoading] = useState(false)
@@ -18,6 +20,8 @@ const CreateAccountForm = () => {
   const [formFields, setFormFields] = useState({})
   const [avatarPreviewUrl, setAvatarPreviewUrl] = useState('')
   const [locationPhotosUrls, setAgencyLocationPhotoPreviewUrls] = useState([])
+
+  const compressImage = useImageCompressor()
 
   const handleLocationPhotosUpload = (imageUrl: string, index: number) => {
     const arr = [...locationPhotosUrls] as any
@@ -91,20 +95,19 @@ const CreateAccountForm = () => {
 
   const submitData = async (formFields: any) => {
     try {
-      const formData = new FormData()
-      let submittedData
-      if (!formFields.avatar) {
-        const { avatar, ...rest } = formFields
-        submittedData = rest
-      } else {
-        submittedData = formFields
-        submittedData.avatar = submittedData.avatar[0]
-      }
-
-      console.log(submittedData)
-      // return
-      // const { data } = await portalCreateAccount(formData)
-      const { data } = await portalCreateAccount(submittedData)
+      console.log(formFields)
+      formFields.avatar = await compressImage(formFields.avatar)
+      formFields.locationPhotos1 = await compressImage(
+        formFields.locationPhotos1
+      )
+      formFields.locationPhotos2 = await compressImage(
+        formFields.locationPhotos2
+      )
+      formFields.locationPhotos3 = await compressImage(
+        formFields.locationPhotos3
+      )
+      console.log(formFields)
+      const { data } = await portalCreateAccount(formFields)
       const { tokens } = data
       console.log(data)
       Cookies.set('portalUserAccessToken', tokens.access.token, { expires: 30 })

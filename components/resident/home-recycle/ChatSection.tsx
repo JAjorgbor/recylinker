@@ -1,6 +1,7 @@
 'use client'
 import { getYoutubeResults } from '@/api/portal-user/requests/chat'
 import InputField from '@/components/elements/InputField'
+import useGetPortalUser from '@/hooks/requests/resident/useGetPortalUser'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { Avatar, Card, CardBody, Skeleton } from '@nextui-org/react'
 import Image from 'next/image'
@@ -20,7 +21,7 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
   const [responseLoading, setResponseLoading] = useState(false)
   const [chatHistory, setChatHistory] = useState<any[]>([])
   const [selectedImage, setSelectedImage] = useState<null | string>(null)
-
+  const { portalUser } = useGetPortalUser()
   const {
     register,
     handleSubmit,
@@ -180,8 +181,8 @@ const ChatSection: FC<ChatSectionProps> = ({}) => {
                 {each.role == 'user' ? (
                   <div className='space-y-3'>
                     <p className='flex gap-3 items-center justify-end font-bold'>
-                      User
-                      <Avatar size='sm' />
+                      {portalUser?.firstName + ' ' + portalUser?.lastName}
+                      <Avatar size='sm' src={portalUser?.avatar || ''} />
                     </p>
                     <Card className='border bg-background border-primary'>
                       <CardBody className='md-container'>

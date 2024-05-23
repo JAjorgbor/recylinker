@@ -3,6 +3,7 @@ import { portalAgencyCreateAccount } from '@/api/portal-agency/requests/auth'
 import InputField from '@/components/elements/InputField'
 import useGetFormData from '@/hooks/useGetFormData'
 import useHandleImageDraft from '@/hooks/useHandleImageDraft'
+import useImageCompressor from '@/hooks/useImageCompressor'
 import { recyclableMaterials } from '@/libraries/recyclable-materials-categories'
 import { Button, Card, CardBody, Tab, Tabs } from '@nextui-org/react'
 import Cookies from 'js-cookie'
@@ -22,6 +23,8 @@ const CreateAccountForm = () => {
   const [brandLogoPreviewUrl, setBrandLogoPreviewUrl] = useState()
   const [locationPhotosUrls, setAgencyLocationPhotoPreviewUrls] = useState([])
   const handleImageDraft = useHandleImageDraft()
+
+  const compressImage = useImageCompressor()
 
   const searchParams = useSearchParams()
   const {
@@ -55,7 +58,6 @@ const CreateAccountForm = () => {
     },
   })
   const router = useRouter()
-  const objectToFormData = useGetFormData()
 
   useEffect(() => {
     const subscribe = watch((values) => {
@@ -70,7 +72,12 @@ const CreateAccountForm = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setValue('address.latitude', position.coords.latitude)
-          setValue('address.longitude', position.coords.longitude)
+          setValue('address.longitude', position.coords.longitude),
+            {
+              enableHighAccuracy: true,
+              timeout: 10000, // 10 seconds
+              maximumAge: 0, // Prevent caching
+            }
         },
         (error) => {
           console.log(error.message)
@@ -99,6 +106,11 @@ const CreateAccountForm = () => {
 
   const submitData = async (formFields: any) => {
     try {
+      formFields.brandLogo = compressImage(formFields.brandLogo)
+      formFields.locationPhotos1 = compressImage(formFields.locationPhotos1)
+      formFields.locationPhotos2 = compressImage(formFields.locationPhotos2)
+      formFields.locationPhotos3 = compressImage(formFields.locationPhotos3)
+
       const { data } = await portalAgencyCreateAccount(formFields)
       const { tokens } = data
       console.log(data)
