@@ -1,4 +1,4 @@
-import DropPointsSection from '@/components/resident/drop-points/DropPointsSection'
+import DropPointsSection from '@/components/driver/drop-points/DropPointsSection'
 import type { FC } from 'react'
 
 interface pageProps {}

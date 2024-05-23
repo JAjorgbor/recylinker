@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import type { FC } from 'react'
-import Sidebar from '@/scaffold/Sidebar'
-import Header from '@/scaffold/Header'
+import Sidebar from '@/scaffold/driver/Sidebar'
+import Header from '@/scaffold/driver/Header'
 
 interface layoutProps {
   children: ReactNode
