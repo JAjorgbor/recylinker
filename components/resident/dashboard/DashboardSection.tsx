@@ -26,7 +26,12 @@ const DashboardSection: FC<DashboardSectionProps> = ({}) => {
             <h3 className='text-2xl sm:text-3xl font-bold'>
               Welcome back {portalUser?.firstName}
             </h3>
-            <Button variant='solid' color='primary' className='font-bold'>
+            <Button
+              variant='solid'
+              color='primary'
+              className='font-bold'
+              href='/resident/pickups/order-pickup'
+            >
               Order Trash Pickup
             </Button>
             {/* </div> */}
@@ -160,7 +165,7 @@ const DashboardSection: FC<DashboardSectionProps> = ({}) => {
                 color='primary'
                 endContent={<ArrowRight size={20} />}
                 className='md:w-1/2'
-                href='/home-recycle'
+                href='/resident/home-recycle'
                 as={Link}
               >
                 Start Recycling Chat

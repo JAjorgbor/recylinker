@@ -2,6 +2,8 @@
 
 import { FC, useState, forwardRef, ReactNode } from 'react'
 import { Select, SelectItem, Input, Textarea } from '@nextui-org/react'
+// import {TimeInput} from "@nextui-org/date-input";
+
 import { Eye, EyeOff } from 'react-feather'
 
 interface InputFieldProps {
@@ -163,6 +165,46 @@ const InputField: FC<InputFieldProps> = ({
                   </SelectItem>
                 ))}
               </Select>
+            )
+          case 'time':
+            return (
+              <Input
+                type='time'
+                label={label}
+                isRequired={isRequired}
+                errorMessage={errorMessage}
+                disabled={disabled}
+                placeholder={placeholder}
+                variant={variant}
+                className={className}
+                endContent={endContent}
+                startContent={startContent}
+                isInvalid={isInvalid}
+                value={value ?? register?.value}
+                onValueChange={onChange}
+                {...register}
+                {...props}
+              />
+            )
+          case 'date':
+            return (
+              <Input
+                type='date'
+                label={label}
+                isRequired={isRequired}
+                errorMessage={errorMessage}
+                disabled={disabled}
+                placeholder={placeholder}
+                variant={variant}
+                className={className}
+                endContent={endContent}
+                startContent={startContent}
+                isInvalid={isInvalid}
+                value={value ?? register?.value}
+                onValueChange={onChange}
+                {...register}
+                {...props}
+              />
             )
           default:
             return (

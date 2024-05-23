@@ -13,7 +13,7 @@ const Page = () => {
         <Button
           endContent={<ArrowRight size={15} />}
           color='primary'
-          href='/resident/pickups/new-pickup'
+          href='/resident/pickups/order-pickup'
           as={Link}
         >
           Order New Pickup
